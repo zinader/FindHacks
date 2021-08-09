@@ -31,7 +31,7 @@ const CardsComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       const results = await api.get("/hacks");
-      setData(results.data.hackathon);
+      setData(results.data.data);
       setLoader(false);
     };
     fetchData();
@@ -63,23 +63,14 @@ const CardsComponent = () => {
             <MenuItem active value={"hacks"}>
               All
             </MenuItem>
-            <MenuItem className="menu-item" value={"devfolio"}>
-              Devfolio
-            </MenuItem>
             <MenuItem className="menu-item" value={"mlh"}>
               MLH
             </MenuItem>
             <MenuItem className="menu-item" value={"devpost"}>
               Devpost
             </MenuItem>
-            <MenuItem className="menu-item" value={"eventbrite"}>
-              EventBrite
-            </MenuItem>
             <MenuItem className="menu-item" value={"hackerearth"}>
               HackerEarth
-            </MenuItem>
-            <MenuItem className="menu-item" value={"hackclub"}>
-              HighSchool
             </MenuItem>
           </Select>
         </FormControl>

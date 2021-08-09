@@ -1,6 +1,9 @@
 from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
 import json
+import scrapers.devpost as devpost
+import scrapers.hackerearth as hackerearth
+import scrapers.mlh as mlh
 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
@@ -13,24 +16,11 @@ def hello_world():
 
 @app.route('/hacks', methods=['GET'])
 def getMLHHacks():
-    all_hacks = []
-    with open('data.json') as data_file:
-        all_hacks = json.load(data_file)
-
-    return jsonify(
-        hackathon=all_hacks
-    )
-
-
-@app.route('/<company>', methods=['GET'])
-def getMLH(company):
-    all_hacks = []
-    with open('data.json') as data_file:
-        all_hacks = json.load(data_file)
-
-    return jsonify(
-        hackathon=[hack for hack in all_hacks if hack["company"] == company]
-    )
+    hackathons = []
+    hackathons = devpost.devpost(hackathons)
+    hackathons = mlh.mlh(hackathons)
+    hackathons = hackerearth.hackerearth(hackathons)
+    return jsonify(data=hackathons)
 
 
 if __name__ == "__main__":
